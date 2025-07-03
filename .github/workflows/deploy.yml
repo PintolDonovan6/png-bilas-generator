@@ -13,13 +13,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-           - name: Install Cog CLI
+      - name: Install Cog CLI
         run: |
           COG_VERSION=$(curl -s https://api.github.com/repos/replicate/cog/releases/latest | jq -r '.tag_name')
           curl -fsSL https://github.com/replicate/cog/releases/download/${COG_VERSION}/cog-linux-amd64 -o cog
           chmod +x cog
           sudo mv cog /usr/local/bin/cog
-
 
       - name: Login to Replicate
         env:
