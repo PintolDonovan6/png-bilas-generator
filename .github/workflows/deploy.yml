@@ -13,13 +13,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install Cog
-        run: pip install cog
+      - name: Install Cog CLI
+        run: |
+          curl -fsSL https://github.com/replicate/cog/releases/download/v0.9.1/cog-linux-amd64 -o cog
+          chmod +x cog
+          sudo mv cog /usr/local/bin/cog
 
       - name: Push model to Replicate
         env:
