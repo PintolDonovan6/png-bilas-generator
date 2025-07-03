@@ -3,7 +3,7 @@ name: Deploy model to Replicate
 on:
   push:
     branches:
-      - main
+      - main  # or your default branch
 
 jobs:
   deploy:
