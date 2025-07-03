@@ -1,21 +1,16 @@
 build:
-  python_version: "3.9"
+  gpu: true
+  python_version: "3.10"
+  system_packages:
+    - "libglib2.0-0"
+    - "libsm6"
+    - "libxrender1"
+    - "libxext6"
   python_packages:
-    - torch
-    - torchvision
-    - diffusers
-    - transformers
-    - accelerate
-    - pillow
+    - "torch"
+    - "transformers"
+    - "diffusers"
+    - "pillow"
+    - "requests"
 
-predict:
-  command: python predict.py --prompt "{{prompt}}"
-  inputs:
-    - name: prompt
-      type: string
-      default: "A beautiful Papua New Guinean traditional design"
-      description: "Text prompt to generate an image"
-  outputs:
-    - name: image
-      type: path
-      description: "Generated image file path"
+predict: "predict.py:Predictor"
