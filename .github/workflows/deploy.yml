@@ -1,0 +1,30 @@
+name: Deploy model to Replicate
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Cog
+        run: |
+          curl -fsSL https://github.com/replicate/cog/releases/latest/download/cog-linux-amd64 -o cog
+          chmod +x cog
+          sudo mv cog /usr/local/bin/cog
+
+      - name: Login to Replicate
+        env:
+          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
+        run: |
+          cog login --token $REPLICATE_API_TOKEN
+
+      - name: Push model to Replicate
+        run: |
+          cog push r8.im/pintoldonovan6/pngbilasgenerator
