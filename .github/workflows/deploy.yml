@@ -3,7 +3,7 @@ name: Deploy model to Replicate
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 jobs:
   deploy:
@@ -13,12 +13,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install Cog CLI
-        run: |
-          COG_VERSION=v0.9.1
-          curl -fsSL https://github.com/replicate/cog/releases/download/${COG_VERSION}/cog-linux-amd64 -o cog
-          chmod +x cog
-          sudo mv cog /usr/local/bin/cog
+      - name: Set up Python & install Cog
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Cog via pip
+        run: pip install cogapp
 
       - name: Login to Replicate
         env:
