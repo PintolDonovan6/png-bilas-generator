@@ -1,0 +1,21 @@
+build:
+  python_version: "3.9"
+  python_packages:
+    - torch
+    - torchvision
+    - diffusers
+    - transformers
+    - accelerate
+    - pillow
+
+predict:
+  command: python predict.py --prompt "{{prompt}}"
+  inputs:
+    - name: prompt
+      type: string
+      default: "A beautiful Papua New Guinean traditional design"
+      description: "Text prompt to generate an image"
+  outputs:
+    - name: image
+      type: path
+      description: "Generated image file path"
