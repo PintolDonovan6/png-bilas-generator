@@ -3,7 +3,7 @@ name: Deploy model to Replicate
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 jobs:
   deploy:
@@ -25,7 +25,7 @@ jobs:
         env:
           REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
         run: |
-          cog login --token $REPLICATE_API_TOKEN
+          cog login $REPLICATE_API_TOKEN
 
       - name: Push model to Replicate
         run: |
