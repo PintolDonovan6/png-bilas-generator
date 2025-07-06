@@ -1,15 +1,15 @@
 import torch
 from diffusers import StableDiffusionPipeline
+from cog import BasePredictor, Input
 
-class Predictor:
-    def __init__(self):
+class Predictor(BasePredictor):
+    def setup(self):
         self.pipe = StableDiffusionPipeline.from_pretrained(
-            "stabilityai/stable-diffusion-2-1",
-            torch_dtype=torch.float16,
-            revision="fp16"
+            "runwayml/stable-diffusion-v1-5", 
+            torch_dtype=torch.float16
         ).to("cuda")
 
-    def predict(self, prompt: str) -> str:
+    def predict(self, prompt: str = Input(description="Input prompt")):
         image = self.pipe(prompt).images[0]
-        image.save("/tmp/output.png")
-        return "/tmp/output.png"
+        image.save("output.png")
+        return "output.png"
