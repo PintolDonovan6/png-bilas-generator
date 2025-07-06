@@ -1,23 +1,27 @@
-from cog import BasePredictor, Path, Input
-import torch
+from cog import BasePredictor, Input, Path
 from PIL import Image
-import io
+import torch
 
 class Predictor(BasePredictor):
     def setup(self):
-        # Load your model weights here
-        self.model = torch.load("weights.pth", map_location="cpu")  # or GPU if available
+        """Load the model into memory"""
+        self.model = torch.load("weights.pth", map_location="cpu")
         self.model.eval()
 
     def predict(
         self,
-        input_image: Path = Input(description="Input image for pattern generation"),
-        scale: float = Input(description="Scale factor", default=1.5),
+        input_image: Path = Input(description="Input image for PNG pattern generation"),
+        scale: float = Input(description="Optional scaling factor", default=1.5),
     ) -> Path:
-        # Example: open image, run model, save output
-        img = Image.open(input_image)
-        # Replace this with your actual model processing logic
-        # For demonstration, just save the input as output
-        output_path = Path("output.png")
+        """Run a prediction and return the output image"""
+
+        # Load input image
+        img = Image.open(input_image).convert("RGB")
+
+        # --------- Replace this block with your actual model logic ----------
+        # Example dummy output: just saves the input image as output
+        output_path = "output.png"
         img.save(output_path)
-        return output_path
+        # -------------------------------------------------------------------
+
+        return Path(output_path)
