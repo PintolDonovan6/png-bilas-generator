@@ -15,16 +15,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/latest/download/cog_$(uname -s)_$(uname -m)
-          sudo chmod +x /usr/local/bin/cog
-          python3 -m pip install --upgrade pip
-          pip install cogapp
+          COG_VERSION=v0.9.1
+          curl -fsSL https://github.com/replicate/cog/releases/download/${COG_VERSION}/cog-linux-amd64 -o cog
+          chmod +x cog
+          sudo mv cog /usr/local/bin/cog
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip3 install cogapp
 
       - name: Login to Replicate
         env:
-          REPLICATE_API_TOKEN: ${{ secrets.API_TOKEN }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          cog login --token $REPLICATE_API_TOKEN
+          cog login --token $API_TOKEN
 
       - name: Push model to Replicate
         run: |
