@@ -1,8 +1,9 @@
 build:
-  gpu: true
-  python_version: "3.10"
+  python_version: "3.12"
   python_packages:
-    - "torch==2.3.1"
-    - "transformers"
-    - "diffusers"
+    - torch==2.3.1
+    - pillow
+    - numpy
+  gpu: true  # if you want GPU support; remove if not needed
+
 predict: "predict.py:Predictor"
