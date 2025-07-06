@@ -3,7 +3,7 @@ name: Deploy model to Replicate
 on:
   push:
     branches:
-      - main  # your default branch
+      - main
 
 jobs:
   deploy:
@@ -15,24 +15,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Install jq to parse JSON
-          sudo apt-get update && sudo apt-get install -y jq curl
-
-      - name: Install Cog CLI
-        run: |
-          COG_VERSION=$(curl -s https://api.github.com/repos/replicate/cog/releases/latest | jq -r '.tag_name')
-          echo "Installing Cog CLI version $COG_VERSION"
-          curl -fsSL https://github.com/replicate/cog/releases/download/${COG_VERSION}/cog-linux-amd64 -o cog
-          chmod +x cog
-          sudo mv cog /usr/local/bin/cog
-          cog --version
+          sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/latest/download/cog_$(uname -s)_$(uname -m)
+          sudo chmod +x /usr/local/bin/cog
+          python3 -m pip install --upgrade pip
+          pip install cogapp
 
       - name: Login to Replicate
         env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
+          REPLICATE_API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          cog login --token $API_TOKEN
+          cog login --token $REPLICATE_API_TOKEN
 
       - name: Push model to Replicate
         run: |
-          cog push r8.im/pintoldonovan6/pngbilasgenerator
+          cog push r8.im/pintoldonovan6/png-pattern-ai-image-generator
