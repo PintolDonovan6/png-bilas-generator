@@ -1,10 +1,7 @@
 build:
-  python_version: "3.9"
+  gpu: true
+  python_version: "3.12"
   python_packages:
-    - diffusers
-    - torch
-    - transformers
-    - accelerate
-    - Pillow
-
+    - "torch==2.3.1"
+    - "Pillow"
 predict: "predict.py:Predictor"
