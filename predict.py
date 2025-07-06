@@ -1,12 +1,9 @@
-# predict.py
-
 from cog import BasePredictor, Input
 
 class Predictor(BasePredictor):
     def setup(self):
-        # You can load your PNG pattern model here if you have one.
-        pass
+        pass  # Load PNG-style image model here if you have one
 
-    def predict(self, prompt: str = Input(description="Describe the PNG design or pattern you want")) -> str:
-        # Replace this with your real image generation code later
-        return f"PNG pattern generated based on: '{prompt}'"
+    def predict(self, prompt: str = Input(description="Describe PNG pattern")) -> str:
+        # Return dummy output or integrate model here
+        return f"https://example.com/fake-image.png (Prompt: {prompt})"
