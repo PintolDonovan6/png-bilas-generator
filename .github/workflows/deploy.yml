@@ -13,21 +13,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Install Cog CLI
         run: |
-          COG_VERSION=v0.9.1
-          curl -fsSL https://github.com/replicate/cog/releases/download/${COG_VERSION}/cog-linux-amd64 -o cog
+          curl -fsSL https://github.com/replicate/cog/releases/download/v0.9.1/cog-linux-amd64 -o cog
           chmod +x cog
           sudo mv cog /usr/local/bin/cog
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
-          pip3 install cogapp
 
       - name: Login to Replicate
         env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
+          REPLICATE_API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          cog login --token $API_TOKEN
+          cog login --token $REPLICATE_API_TOKEN
 
       - name: Push model to Replicate
         run: |
