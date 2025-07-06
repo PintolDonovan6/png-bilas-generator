@@ -3,7 +3,7 @@ name: Deploy model to Replicate
 on:
   push:
     branches:
-      - main
+      - main  # change if your default branch is different
 
 jobs:
   deploy:
@@ -13,18 +13,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-
-      - name: Install Cog CLI
-        run: pip install cog
+      - name: Install Python and Cog CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip3 install --upgrade pip
+          pip3 install cogapp
+          cog --version
 
       - name: Login to Replicate
         env:
           REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
-        run: cog login --token $REPLICATE_API_TOKEN
+        run: |
+          cog login --token $REPLICATE_API_TOKEN
 
       - name: Push model to Replicate
-        run: cog push r8.im/pintoldonovan6/png-pattern-ai-image-generator
+        run: |
+          cog push r8.im/pintoldonovan6/png-pattern-ai-image-generator
