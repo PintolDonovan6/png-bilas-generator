@@ -1,9 +1,10 @@
 build:
   python_version: "3.9"
   python_packages:
-    - "diffusers"
-    - "torch"
-    - "transformers"
-    - "Pillow"
+    - diffusers
+    - torch
+    - transformers
+    - accelerate
+    - Pillow
 
 predict: "predict.py:Predictor"
