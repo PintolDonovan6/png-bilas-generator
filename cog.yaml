@@ -1,9 +1,9 @@
 build:
+  gpu: true  # Set to true only if your model uses GPU
   python_version: "3.12"
   python_packages:
     - torch==2.3.1
     - pillow
     - numpy
-  gpu: true  # if you want GPU support; remove if not needed
 
 predict: "predict.py:Predictor"
